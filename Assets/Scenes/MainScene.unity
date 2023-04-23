@@ -235,10 +235,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fd922daa841637499377f48d09480ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountOfTiles: 5
+  boardSize: 9
   referenceSize: 5.3
   tileSpacing: 0.01
-  startPosition: {x: -2.43, y: 2, z: 0}
+  startPosition: {x: -2.75, y: 2, z: 0}
+  minMatchSize: 2
   tileSample: {fileID: 4972165509310548281, guid: f6d5d01ba5f7dbe43a5d40f1451636fd, type: 3}
   arts:
   - type: 0

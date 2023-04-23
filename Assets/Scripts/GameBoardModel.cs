@@ -13,7 +13,6 @@ public class GameBoardModel
     private Tile[,] tiles;
     public Tile[,] Tiles { get { return tiles; } }
     public int BoardSize { get; private set; }
-    private int minMatchSize = 2;
     List<Tile> matcheTiles = new List<Tile>();
 
 
@@ -111,12 +110,6 @@ public class GameBoardModel
             {
                 break;
             }
-        }
-
-
-        if (matcheTiles.Count > 1)
-        {
-            //pop
         }
 
         return matcheTiles;

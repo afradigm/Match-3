@@ -13,7 +13,7 @@ public class GameBoardPresenter : MonoBehaviour
     [Header("References")]
     [Space(20)]
     [SerializeField] private TileView tileSample;
-    [SerializeField] private GameBoardModel gameBoard;
+    [SerializeField] private GameBoardModel logic;
     [SerializeField] private List<ArtStruct> arts = new List<ArtStruct>();
 
 
@@ -24,23 +24,23 @@ public class GameBoardPresenter : MonoBehaviour
 
     public void Initialize(int boardSize)
     {
-        gameBoard = new GameBoardModel(boardSize);
+        logic = new GameBoardModel(boardSize);
         GenerateBoard();
     }
 
     private void GenerateBoard()
     {
-        for (int row = 0; row < gameBoard.Tiles.GetLength(0); row++)
+        for (int row = 0; row < logic.Tiles.GetLength(0); row++)
         {
-            for (int column = 0; column < gameBoard.Tiles.GetLength(1); column++)
+            for (int column = 0; column < logic.Tiles.GetLength(1); column++)
             {
-                Tile tile = gameBoard.Tiles[row, column];
+                Tile tile = logic.Tiles[row, column];
                 TileView newTile = Instantiate(tileSample, transform);
-                int tileIndex = row * gameBoard.Tiles.GetLength(1) + column;
+                int tileIndex = row * logic.Tiles.GetLength(1) + column;
                 float delay = tileIndex * 0.01f; // Change the delay time as you wish
-                newTile.name = row + "-" + column;
                 float tileScale = GetTileScale();
-                newTile.Setup(tileData: tile, scale: tileScale, position: GetTilePosition(tileScale, row, column), sprite: GetArt(tile.type), sortingOrder: (gameBoard.Tiles.GetLength(0) - row), delay);
+                newTile.Setup(tileData: tile, scale: tileScale, position: GetTilePosition(tileScale, row, column),
+                    sprite: GetArt(tile.type), sortingOrder: (logic.Tiles.GetLength(0) - row), delay, OnTileClick);
             }
         }
     }
@@ -58,15 +58,20 @@ public class GameBoardPresenter : MonoBehaviour
 
     private Vector2 GetTilePosition(float tileScale, int row, int column)
     {
-        Vector2 topLeftPosition = CalculateTopLeftPosition(tileScale);
-        Vector2 tilePosition = new Vector2(topLeftPosition.x + column * (tileScale + tileSpacing), topLeftPosition.y - row * (tileScale + tileSpacing));
+        float xPos = ((referenceSize / (amountOfTiles)) * column) + (startPosition.x + tileScale);
+        float yPos = (((referenceSize / (amountOfTiles)) * row) - (startPosition.y + tileScale)) * -1;
+        Vector2 tilePosition = new Vector2(xPos, yPos);
         return tilePosition;
     }
 
-    private Vector2 CalculateTopLeftPosition(float tileScale)
+    private void OnTileClick(Tile tileData)
     {
-        Vector2 topLeftPosition = new Vector2(startPosition.x - referenceSize / 2.0f + tileScale / 2.0f, startPosition.y + referenceSize / 2.0f - tileScale / 2.0f);
-        return topLeftPosition;
+        var matcheTiles = logic.GetMatches(tileData);
+
+        for (int i = 0; i < matcheTiles.Count; i++)
+        {
+            Debug.Log($"{matcheTiles[i].row} - {matcheTiles[i].column}");
+        }
     }
 }
 

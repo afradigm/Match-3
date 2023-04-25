@@ -76,6 +76,7 @@ public class GameBoardPresenter : MonoBehaviour
         if (matcheTiles.Count >= minMatchSize)
         {
             TweenPopEffect(matcheTiles);
+            logic.RefillBoard(new List<Tile>(matcheTiles));
         }
         else
         {

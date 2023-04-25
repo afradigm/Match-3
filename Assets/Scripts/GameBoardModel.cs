@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameBoardModel
 {
@@ -37,11 +38,12 @@ public class GameBoardModel
     public List<Tile> GetMatches(Tile selectedTile)
     {
         matcheTiles.Clear();
+        CheckForMatches(selectedTile);
 
-        return CheckForMatches(selectedTile);
+        return matcheTiles;
     }
 
-    private List<Tile> CheckForMatches(Tile selectedTile)
+    private void CheckForMatches(Tile selectedTile)
     {
         if (!matcheTiles.Contains(selectedTile))
         {
@@ -111,8 +113,29 @@ public class GameBoardModel
                 break;
             }
         }
+    }
 
-        return matcheTiles;
+    public void RefillBoard(List<Tile> matches)
+    {
+        List<Tile> uniqueColumns = matches.GroupBy(x => x.column).Select(x => x.First()).ToList();
+
+        for (int i = 0; i < uniqueColumns.Count; i++)
+        {
+            List<Tile> uniqueRowsInEachColumn = matches.FindAll(x => x.column == uniqueColumns[i].column);
+            if (uniqueRowsInEachColumn.Count > 1)
+            {
+                uniqueRowsInEachColumn.Sort((x, y) => y.row.CompareTo(x.row));  //Sort from large to small
+            }
+
+            for (int j = 0; j < uniqueRowsInEachColumn.Count; j++)
+            {
+                //from buttom to top.
+            }
+
+
+
+
+        }
     }
 }
 

@@ -115,7 +115,7 @@ public class GameBoardModel
         }
     }
 
-    public void RefillBoard(List<Tile> matches)
+    public void RefillBoard(List<Tile> matches, Action<Tile, Tile> OnRefillBoardView)
     {
         List<Tile> uniqueColumns = matches.GroupBy(x => x.column).Select(x => x.First()).ToList();
 
@@ -124,22 +124,42 @@ public class GameBoardModel
             List<Tile> uniqueRowsInEachColumn = matches.FindAll(x => x.column == uniqueColumns[i].column);
             if (uniqueRowsInEachColumn.Count > 1)
             {
-                uniqueRowsInEachColumn.Sort((x, y) => y.row.CompareTo(x.row));  //Sort from large to small
+                uniqueRowsInEachColumn.Sort((x, y) => x.row.CompareTo(y.row));  //Sort from small to large
             }
 
-            for (int j = 0; j < uniqueRowsInEachColumn.Count; j++)
+            int columnIndex = uniqueColumns[i].column;
+            int upestRowIndex = uniqueRowsInEachColumn[0].row; //also this is number Of Travers In This Column.
+            int bottomestRowIndex = uniqueRowsInEachColumn[(uniqueRowsInEachColumn.Count - 1)].row;
+
+            if (upestRowIndex > 0)
             {
-                //from buttom to top.
+                for (int j = 0; j <= bottomestRowIndex; j++)
+                {
+                    Tile bottomestTile = tiles[bottomestRowIndex - j, columnIndex];
+                    if (upestRowIndex - 1 - j >= 0)
+                    {
+                        Tile oneAboveTheUpestTile = tiles[upestRowIndex - 1 - j, columnIndex];
+                        bottomestTile.ReplaceTile(oneAboveTheUpestTile.type); //just type need to change.
+                        OnRefillBoardView?.Invoke(oneAboveTheUpestTile, bottomestTile); //TODO
+                    }
+                    else
+                    {
+                        bottomestTile.ReplaceTile(GetRandomTileType());
+                        OnRefillBoardView?.Invoke(null, bottomestTile); //TODO
+                    }
+
+                    UnityEngine.Debug.Log($"lowest index: {upestRowIndex}");
+                    UnityEngine.Debug.Log($"highedt index: {bottomestRowIndex}");
+                }
             }
+            else
+            {
+                Tile bottomestTile = tiles[0, columnIndex];
+                bottomestTile.ReplaceTile(GetRandomTileType());
+                OnRefillBoardView?.Invoke(null, bottomestTile); //TODO
 
-
-
-
+                UnityEngine.Debug.Log("this colomn has one tile and this tile is in row = 0");
+            }
         }
     }
 }
-
-
-//just Add to sameList active tiles. or remove active tiles from tiles. 
-//Read levels from json file 
-// every level has a array of deactive tiles + amount of pop to win 

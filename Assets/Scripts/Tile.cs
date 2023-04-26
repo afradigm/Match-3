@@ -14,4 +14,9 @@ public class Tile
         this.type = type;
         this.isActive = isActive;
     }
+
+    public void ReplaceTile(TileType type)
+    {
+        this.type = type;
+    }
 }

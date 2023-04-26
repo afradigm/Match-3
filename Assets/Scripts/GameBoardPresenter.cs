@@ -76,7 +76,7 @@ public class GameBoardPresenter : MonoBehaviour
         if (matcheTiles.Count >= minMatchSize)
         {
             TweenPopEffect(matcheTiles);
-            logic.RefillBoard(new List<Tile>(matcheTiles));
+            logic.RefillBoard(new List<Tile>(matcheTiles), OnRefillBoard);
         }
         else
         {
@@ -110,6 +110,13 @@ public class GameBoardPresenter : MonoBehaviour
                 });
             });
         }
+    }
+
+    private void OnRefillBoard(Tile oldTileData, Tile newTileData)
+    {
+
+
+        Debug.Log($"refill view: {oldTileData.row} - {oldTileData.column}");
     }
 }
 

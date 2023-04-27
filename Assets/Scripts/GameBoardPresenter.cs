@@ -2,11 +2,11 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameBoardPresenter : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private int boardSize = 9;
     [SerializeField] private float referenceSize = 10.0f;
     [SerializeField] private float tileSpacing = 0.22f;
     [SerializeField] private int minMatchSize = 2;
@@ -15,24 +15,27 @@ public class GameBoardPresenter : MonoBehaviour
     [Space(20)]
     [SerializeField] private TileView tileSample;
     [SerializeField] private GameBoardModel logic;
+    [SerializeField] private Text movesText;
     [SerializeField] private List<ArtStruct> arts = new List<ArtStruct>();
 
+    private int boardSize = 9;
+    private int moves;
     private TileView[,] tilesView;
     private List<TileView> tilesMatchesView;
     private bool isRefillingBoard = false;
+    private Action OnCompleteLevel;
 
 
-    private void Start()
+    public void Initialize(Level level, Action OnCompleteLevel)
     {
-        Initialize(boardSize);
-    }
+        moves = level.moves;
+        this.OnCompleteLevel = OnCompleteLevel;
+        boardSize = level.boardSize;
 
-    public void Initialize(int boardSize)
-    {
         logic = new GameBoardModel(boardSize);
         tilesView = new TileView[boardSize, boardSize];
         tilesMatchesView = new List<TileView>();
-
+        UpdateMovesText();
         GenerateBoard();
     }
 
@@ -87,6 +90,8 @@ public class GameBoardPresenter : MonoBehaviour
         var matcheTiles = logic.GetMatches(tileData);
         if (matcheTiles.Count >= minMatchSize)
         {
+            moves--;
+            UpdateMovesText();
             isRefillingBoard = true;
             TweenPopEffect(matcheTiles);
         }
@@ -137,6 +142,16 @@ public class GameBoardPresenter : MonoBehaviour
         }
 
         isRefillingBoard = false;
+    }
+
+    private void UpdateMovesText()
+    {
+        movesText.text = moves.ToString();
+
+        if (moves <= 0)
+        {
+            OnCompleteLevel?.Invoke();
+        }
     }
 }
 

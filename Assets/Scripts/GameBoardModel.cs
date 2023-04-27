@@ -155,8 +155,6 @@ public class GameBoardModel
                 bottomestTile.ReplaceTile(GetRandomTileType());
                 OnRefillBoardView?.Invoke(null, bottomestTile);
             }
-
-            
         }
     }
 }

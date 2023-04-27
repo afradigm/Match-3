@@ -19,7 +19,7 @@ public class GameBoardPresenter : MonoBehaviour
 
     private TileView[,] tilesView;
     private List<TileView> tilesMatchesView;
-    private bool isRefillBoard = false;
+    private bool isRefillingBoard = false;
 
 
     private void Start()
@@ -82,11 +82,13 @@ public class GameBoardPresenter : MonoBehaviour
 
     private void OnTileClick(Tile tileData)
     {
+        if (isRefillingBoard) return;
+
         var matcheTiles = logic.GetMatches(tileData);
         if (matcheTiles.Count >= minMatchSize)
         {
+            isRefillingBoard = true;
             TweenPopEffect(matcheTiles);
-            isRefillBoard = false;
         }
         else
         {
@@ -111,13 +113,10 @@ public class GameBoardPresenter : MonoBehaviour
             {
                 tile.transform.DOScale(endTweenValue * 0.2f, 0.1f).SetEase(Ease.InQuad).SetId("pop").OnComplete(() =>
                 {
-                    if (i == matcheTiles.Count && !isRefillBoard)
+                    if (i == matcheTiles.Count && isRefillingBoard)
                     {
                         DOTween.Kill("pop");
                         logic.RefillBoard(new List<Tile>(matcheTiles), OnRefillBoard);
-                        isRefillBoard = true;
-
-                        Debug.Log("refill view");
                     }
                 });
             });
@@ -136,6 +135,8 @@ public class GameBoardPresenter : MonoBehaviour
         {
             bottomestTileView.SetScale().SetSpriteRenderer(GetArt(UpestTile.type)).TweenMove(UpestTile.position.y, bottomestTile.position.y);
         }
+
+        isRefillingBoard = false;
     }
 }
 

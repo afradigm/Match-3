@@ -87,7 +87,6 @@ public class GameBoardPresenter : MonoBehaviour
         {
             TweenPopEffect(matcheTiles);
             isRefillBoard = false;
-            //  logic.RefillBoard(new List<Tile>(matcheTiles), OnRefillBoard); //TODO tmp
         }
         else
         {
@@ -97,7 +96,7 @@ public class GameBoardPresenter : MonoBehaviour
 
         for (int i = 0; i < matcheTiles.Count; i++)
         {
-            Debug.Log($"{matcheTiles[i].row} - {matcheTiles[i].column}");
+           // Debug.Log($"{matcheTiles[i].row} - {matcheTiles[i].column}");
         }
     }
 
@@ -117,8 +116,6 @@ public class GameBoardPresenter : MonoBehaviour
             {
                 tile.transform.DOScale(endTweenValue * 0.2f, 0.1f).SetEase(Ease.InQuad).SetId("pop").OnComplete(() =>
                 {
-                    // tile.SetActive(false);
-
                     if (i == matcheTiles.Count && !isRefillBoard)
                     {
                         DOTween.Kill("pop");

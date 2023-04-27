@@ -131,7 +131,7 @@ public class GameBoardModel
             int upestRowIndex = uniqueRowsInEachColumn[0].row; //also this is number Of Travers In This Column.
             int bottomestRowIndex = uniqueRowsInEachColumn[(uniqueRowsInEachColumn.Count - 1)].row;
 
-            if (upestRowIndex > 0)
+            if (bottomestRowIndex > 0)
             {
                 for (int j = 0; j <= bottomestRowIndex; j++)
                 {
@@ -141,21 +141,26 @@ public class GameBoardModel
                         Tile oneAboveTheUpestTile = tiles[upestRowIndex - 1 - j, columnIndex];
                         bottomestTile.ReplaceTile(oneAboveTheUpestTile.type);
                         OnRefillBoardView?.Invoke(oneAboveTheUpestTile, bottomestTile);
+                        UnityEngine.Debug.Log($"refill bottomestTile: {bottomestTile.row} - {bottomestTile.column}");
+                        UnityEngine.Debug.Log($"refill oneAboveTheUpestTile: {oneAboveTheUpestTile.row} - {oneAboveTheUpestTile.column}");
                     }
                     else
                     {
                         bottomestTile.ReplaceTile(GetRandomTileType());
-                        OnRefillBoardView?.Invoke(null, bottomestTile); 
+                        OnRefillBoardView?.Invoke(null, bottomestTile);
+                        UnityEngine.Debug.Log($"refill bottomestTile: {bottomestTile.row} - {bottomestTile.column}");
                     }
                 }
             }
             else
             {
-                Tile bottomestTile = tiles[0, columnIndex];
+                Tile bottomestTile = tiles[0, columnIndex]; //first row
                 bottomestTile.ReplaceTile(GetRandomTileType());
-
                 OnRefillBoardView?.Invoke(null, bottomestTile);
+                UnityEngine.Debug.Log($"refill bottomestTile: {bottomestTile.row} - {bottomestTile.column}");
             }
+
+            
         }
     }
 }

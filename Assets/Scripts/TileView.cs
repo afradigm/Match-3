@@ -89,7 +89,7 @@ public class TileView : MonoBehaviour
         spriteRenderer.sortingOrder = sortingOrder;
         SetActive(true);
         transform.localPosition = new Vector3(transform.localPosition.x, originPosY);
-        transform.DOMoveY(targetPosY, 0.3f).SetEase(Ease.InOutQuad);
+        transform.DOMoveY(targetPosY, 0.3f).SetEase(Ease.InOutQuad).SetDelay(0.01f);
 
         return this;
     }

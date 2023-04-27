@@ -1,0 +1,30 @@
+[
+    { 
+        "boardSize": 9,
+        "deactiveTiles": []
+    },
+    { 
+        "boardSize": 5,
+        "deactiveTiles": []
+    },
+    { 
+        "boardSize": 3,
+        "deactiveTiles": []
+    },
+    { 
+        "boardSize": 13,
+        "deactiveTiles": []
+    },
+    { 
+        "boardSize": 9,
+        "deactiveTiles": []
+    },
+    { 
+        "boardSize": 9,
+        "deactiveTiles": []
+    },
+    { 
+        "boardSize": 9,
+        "deactiveTiles": []
+    }
+]

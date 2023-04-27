@@ -82,7 +82,7 @@ public class GameBoardPresenter : MonoBehaviour
 
     private void OnTileClick(Tile tileData)
     {
-        if (isRefillingBoard) return;
+        if (isRefillingBoard) return; //TODO: Add queue instead of this limitation.
 
         var matcheTiles = logic.GetMatches(tileData);
         if (matcheTiles.Count >= minMatchSize)

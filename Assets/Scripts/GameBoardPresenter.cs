@@ -91,7 +91,6 @@ public class GameBoardPresenter : MonoBehaviour
         if (matcheTiles.Count >= minMatchSize)
         {
             moves--;
-            UpdateMovesText();
             isRefillingBoard = true;
             TweenPopEffect(matcheTiles);
         }
@@ -122,6 +121,7 @@ public class GameBoardPresenter : MonoBehaviour
                     {
                         DOTween.Kill("pop");
                         logic.RefillBoard(new List<Tile>(matcheTiles), OnRefillBoard);
+                        UpdateMovesText();
                     }
                 });
             });

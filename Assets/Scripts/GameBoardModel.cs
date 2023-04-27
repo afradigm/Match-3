@@ -139,26 +139,22 @@ public class GameBoardModel
                     if (upestRowIndex - 1 - j >= 0)
                     {
                         Tile oneAboveTheUpestTile = tiles[upestRowIndex - 1 - j, columnIndex];
-                        bottomestTile.ReplaceTile(oneAboveTheUpestTile.type); //just type need to change.
-                        OnRefillBoardView?.Invoke(oneAboveTheUpestTile, bottomestTile); //TODO
+                        bottomestTile.ReplaceTile(oneAboveTheUpestTile.type);
+                        OnRefillBoardView?.Invoke(oneAboveTheUpestTile, bottomestTile);
                     }
                     else
                     {
                         bottomestTile.ReplaceTile(GetRandomTileType());
-                        OnRefillBoardView?.Invoke(null, bottomestTile); //TODO
+                        OnRefillBoardView?.Invoke(null, bottomestTile); 
                     }
-
-                    UnityEngine.Debug.Log($"lowest index: {upestRowIndex}");
-                    UnityEngine.Debug.Log($"highedt index: {bottomestRowIndex}");
                 }
             }
             else
             {
                 Tile bottomestTile = tiles[0, columnIndex];
                 bottomestTile.ReplaceTile(GetRandomTileType());
-                OnRefillBoardView?.Invoke(null, bottomestTile); //TODO
 
-                UnityEngine.Debug.Log("this colomn has one tile and this tile is in row = 0");
+                OnRefillBoardView?.Invoke(null, bottomestTile);
             }
         }
     }

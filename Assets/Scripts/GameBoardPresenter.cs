@@ -18,6 +18,8 @@ public class GameBoardPresenter : MonoBehaviour
     [SerializeField] private List<ArtStruct> arts = new List<ArtStruct>();
 
     private TileView[,] tilesView;
+    private List<TileView> tilesMatchesView;
+    private bool isRefillBoard = false;
 
 
     private void Start()
@@ -29,6 +31,8 @@ public class GameBoardPresenter : MonoBehaviour
     {
         logic = new GameBoardModel(boardSize);
         tilesView = new TileView[boardSize, boardSize];
+        tilesMatchesView = new List<TileView>();
+
         GenerateBoard();
     }
 
@@ -38,17 +42,23 @@ public class GameBoardPresenter : MonoBehaviour
         {
             for (int column = 0; column < logic.Tiles.GetLength(1); column++)
             {
-                Tile tile = logic.Tiles[row, column];
+                Tile tileData = logic.Tiles[row, column];
                 TileView newTile = Instantiate(tileSample, transform);
                 int tileIndex = row * logic.Tiles.GetLength(1) + column;
                 float delay = tileIndex * 0.01f; // Change the delay time as you wish
                 float tileScale = GetTileScale();
-                newTile.Setup(tileData: tile, scale: tileScale, position: GetTilePosition(tileScale, row, column),
-                    sprite: GetArt(tile.type), sortingOrder: (logic.Tiles.GetLength(0) - row), delay, OnTileClick);
+                Vector2 position = GetTilePosition(tileScale, row, column);
+                tileData.SetPosition(position);
+                newTile.Setup(tileData, tileScale, GetArt(tileData.type), GetSortingOrder(row), delay, OnTileClick);
 
                 tilesView[row, column] = newTile;
             }
         }
+    }
+
+    private int GetSortingOrder(int row)
+    {
+        return (logic.Tiles.GetLength(0) - row);
     }
 
     private Sprite GetArt(TileType type)
@@ -76,7 +86,8 @@ public class GameBoardPresenter : MonoBehaviour
         if (matcheTiles.Count >= minMatchSize)
         {
             TweenPopEffect(matcheTiles);
-            logic.RefillBoard(new List<Tile>(matcheTiles), OnRefillBoard);
+            isRefillBoard = false;
+            logic.RefillBoard(new List<Tile>(matcheTiles), OnRefillBoard); //TODO tmp
         }
         else
         {
@@ -97,26 +108,46 @@ public class GameBoardPresenter : MonoBehaviour
             int row = matcheTiles[i].row;
             int column = matcheTiles[i].column;
             TileView tile = tilesView[row, column];
+            tilesMatchesView.Add(tile);
             tile.SetSortingLayer((boardSize * boardSize * (i + 1)));
             tile.SetOnClickableActive(false);
             float endTweenValue = tile.transform.localScale.x;
 
+
+            /*
             tile.transform.localScale = Vector3.zero;
             tile.transform.DOScale(endTweenValue * 1.2f, 0.5f).SetEase(Ease.OutQuad).OnComplete(() =>
             {
                 tile.transform.DOScale(endTweenValue * 0.2f, 0.1f).SetEase(Ease.InQuad).OnComplete(() =>
                 {
-                    tile.SetActive(false);
+                   // tile.SetActive(false);
+
+                    if (i == matcheTiles.Count && !isRefillBoard)
+                    {
+                        logic.RefillBoard(new List<Tile>(matcheTiles), OnRefillBoard);
+                        isRefillBoard = true;
+
+                        Debug.Log("refill view");
+                    }
                 });
             });
+
+            */
         }
     }
 
-    private void OnRefillBoard(Tile oldTileData, Tile newTileData)
+    private void OnRefillBoard(Tile UpestTile, Tile bottomestTile)
     {
+        TileView bottomestTileView = tilesView[bottomestTile.row, bottomestTile.column];
 
-
-        Debug.Log($"refill view: {oldTileData.row} - {oldTileData.column}");
+        if (UpestTile == null)
+        {
+            bottomestTileView.SetScale().SetPosition(bottomestTile.position).SetSpriteRenderer(GetArt(bottomestTile.type)).SetActive(true);
+        }
+        else
+        {
+            bottomestTileView.SetScale().SetPosition(bottomestTile.position).SetSpriteRenderer(GetArt(UpestTile.type)).SetActive(true);
+        }
     }
 }
 

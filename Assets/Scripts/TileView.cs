@@ -8,14 +8,16 @@ public class TileView : MonoBehaviour
     private Tile tileData;
     private bool isClickable = true;
     private Action<Tile> OnClick;
+    private float scale;
 
-    public void Setup(Tile tileData, float scale, Vector2 position, Sprite sprite, int sortingOrder, float delay, Action<Tile> OnClick)
+    public void Setup(Tile tileData, float scale, Sprite sprite, int sortingOrder, float delay, Action<Tile> OnClick)
     {
         this.tileData = tileData;
         this.OnClick = OnClick;
+        this.scale = scale;
 
         transform.localScale = new Vector2(scale, scale);
-        transform.localPosition = position;
+        transform.localPosition = tileData.position;
         spriteRenderer.sprite = sprite;
         SetSortingLayer(sortingOrder);
         transform.name = $"{tileData.row} - {tileData.column}";
@@ -60,5 +62,23 @@ public class TileView : MonoBehaviour
     public Vector2 GetRealScale()
     {
         return spriteRenderer.size;
+    }
+
+    public TileView SetScale()
+    {
+        transform.localScale = new Vector2(scale, scale);
+        return this;
+    }
+
+    public TileView SetPosition(Vector2 position)
+    {
+        transform.localPosition = position;
+        return this;
+    }
+
+    public TileView SetSpriteRenderer(Sprite sprite)
+    {
+        spriteRenderer.sprite = sprite;
+        return this;
     }
 }

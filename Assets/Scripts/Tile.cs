@@ -6,6 +6,7 @@ public class Tile
     public int column;
     public TileType type;
     public bool isActive;
+    public Vector2 position;
 
     public Tile(int row, int column, TileType type, bool isActive = true)
     {
@@ -13,6 +14,11 @@ public class Tile
         this.column = column;
         this.type = type;
         this.isActive = isActive;
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        this.position = position;
     }
 
     public void ReplaceTile(TileType type)

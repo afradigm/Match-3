@@ -9,8 +9,8 @@ public class GameBoardPresenter : MonoBehaviour
     [SerializeField] private int boardSize = 9;
     [SerializeField] private float referenceSize = 10.0f;
     [SerializeField] private float tileSpacing = 0.22f;
-    [SerializeField] private Vector3 startPosition = Vector3.zero;
     [SerializeField] private int minMatchSize = 2;
+    [SerializeField] private Vector3 startPosition = Vector3.zero;
     [Header("References")]
     [Space(20)]
     [SerializeField] private TileView tileSample;
@@ -87,7 +87,7 @@ public class GameBoardPresenter : MonoBehaviour
         {
             TweenPopEffect(matcheTiles);
             isRefillBoard = false;
-            logic.RefillBoard(new List<Tile>(matcheTiles), OnRefillBoard); //TODO tmp
+            //  logic.RefillBoard(new List<Tile>(matcheTiles), OnRefillBoard); //TODO tmp
         }
         else
         {
@@ -112,18 +112,16 @@ public class GameBoardPresenter : MonoBehaviour
             tile.SetSortingLayer((boardSize * boardSize * (i + 1)));
             tile.SetOnClickableActive(false);
             float endTweenValue = tile.transform.localScale.x;
-
-
-            /*
             tile.transform.localScale = Vector3.zero;
-            tile.transform.DOScale(endTweenValue * 1.2f, 0.5f).SetEase(Ease.OutQuad).OnComplete(() =>
+            tile.transform.DOScale(endTweenValue * 1.2f, 0.5f).SetEase(Ease.OutQuad).SetId("pop").OnComplete(() =>
             {
-                tile.transform.DOScale(endTweenValue * 0.2f, 0.1f).SetEase(Ease.InQuad).OnComplete(() =>
+                tile.transform.DOScale(endTweenValue * 0.2f, 0.1f).SetEase(Ease.InQuad).SetId("pop").OnComplete(() =>
                 {
-                   // tile.SetActive(false);
+                    // tile.SetActive(false);
 
                     if (i == matcheTiles.Count && !isRefillBoard)
                     {
+                        DOTween.Kill("pop");
                         logic.RefillBoard(new List<Tile>(matcheTiles), OnRefillBoard);
                         isRefillBoard = true;
 
@@ -131,8 +129,6 @@ public class GameBoardPresenter : MonoBehaviour
                     }
                 });
             });
-
-            */
         }
     }
 
@@ -142,11 +138,11 @@ public class GameBoardPresenter : MonoBehaviour
 
         if (UpestTile == null)
         {
-            bottomestTileView.SetScale().SetPosition(bottomestTile.position).SetSpriteRenderer(GetArt(bottomestTile.type)).SetActive(true);
+            bottomestTileView.SetScale().SetSpriteRenderer(GetArt(bottomestTile.type)).TweenMove(10f, bottomestTile.position.y);
         }
         else
         {
-            bottomestTileView.SetScale().SetPosition(bottomestTile.position).SetSpriteRenderer(GetArt(UpestTile.type)).SetActive(true);
+            bottomestTileView.SetScale().SetSpriteRenderer(GetArt(UpestTile.type)).TweenMove(UpestTile.position.y, bottomestTile.position.y);
         }
     }
 }

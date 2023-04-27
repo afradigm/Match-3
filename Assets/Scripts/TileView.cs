@@ -9,12 +9,14 @@ public class TileView : MonoBehaviour
     private bool isClickable = true;
     private Action<Tile> OnClick;
     private float scale;
+    private int sortingOrder;
 
     public void Setup(Tile tileData, float scale, Sprite sprite, int sortingOrder, float delay, Action<Tile> OnClick)
     {
         this.tileData = tileData;
         this.OnClick = OnClick;
         this.scale = scale;
+        this.sortingOrder = sortingOrder;
 
         transform.localScale = new Vector2(scale, scale);
         transform.localPosition = tileData.position;
@@ -30,11 +32,6 @@ public class TileView : MonoBehaviour
     public void SetActive(bool value)
     {
         gameObject.SetActive(value);
-    }
-
-    public void SetSortingLayer(int sortingOrder)
-    {
-        spriteRenderer.sortingOrder = sortingOrder;
     }
 
     public void TweenOnClick()
@@ -59,6 +56,11 @@ public class TileView : MonoBehaviour
         OnClick?.Invoke(tileData);
     }
 
+    public void SetSortingLayer(int sortingOrder)
+    {
+        spriteRenderer.sortingOrder = sortingOrder;
+    }
+
     public Vector2 GetRealScale()
     {
         return spriteRenderer.size;
@@ -79,6 +81,16 @@ public class TileView : MonoBehaviour
     public TileView SetSpriteRenderer(Sprite sprite)
     {
         spriteRenderer.sprite = sprite;
+        return this;
+    }
+
+    public TileView TweenMove(float originPosY, float targetPosY)
+    {
+        spriteRenderer.sortingOrder = sortingOrder;
+        SetActive(true);
+        transform.localPosition = new Vector3(transform.localPosition.x, originPosY);
+        transform.DOMoveY(targetPosY, 0.3f).SetEase(Ease.InOutQuad);
+
         return this;
     }
 }

@@ -141,14 +141,11 @@ public class GameBoardModel
                         Tile oneAboveTheUpestTile = tiles[upestRowIndex - 1 - j, columnIndex];
                         bottomestTile.ReplaceTile(oneAboveTheUpestTile.type);
                         OnRefillBoardView?.Invoke(oneAboveTheUpestTile, bottomestTile);
-                        UnityEngine.Debug.Log($"refill bottomestTile: {bottomestTile.row} - {bottomestTile.column}");
-                        UnityEngine.Debug.Log($"refill oneAboveTheUpestTile: {oneAboveTheUpestTile.row} - {oneAboveTheUpestTile.column}");
                     }
                     else
                     {
                         bottomestTile.ReplaceTile(GetRandomTileType());
                         OnRefillBoardView?.Invoke(null, bottomestTile);
-                        UnityEngine.Debug.Log($"refill bottomestTile: {bottomestTile.row} - {bottomestTile.column}");
                     }
                 }
             }
@@ -157,7 +154,6 @@ public class GameBoardModel
                 Tile bottomestTile = tiles[0, columnIndex]; //first row
                 bottomestTile.ReplaceTile(GetRandomTileType());
                 OnRefillBoardView?.Invoke(null, bottomestTile);
-                UnityEngine.Debug.Log($"refill bottomestTile: {bottomestTile.row} - {bottomestTile.column}");
             }
 
             

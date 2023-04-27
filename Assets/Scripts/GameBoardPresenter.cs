@@ -93,11 +93,6 @@ public class GameBoardPresenter : MonoBehaviour
             TileView tile = tilesView[tileData.row, tileData.column];
             tile.TweenOnClick();
         }
-
-        for (int i = 0; i < matcheTiles.Count; i++)
-        {
-           // Debug.Log($"{matcheTiles[i].row} - {matcheTiles[i].column}");
-        }
     }
 
     private void TweenPopEffect(List<Tile> matcheTiles)

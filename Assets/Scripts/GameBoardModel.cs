@@ -128,8 +128,8 @@ public class GameBoardModel
             }
 
             int columnIndex = uniqueColumns[i].column;
-            int upestRowIndex = uniqueRowsInEachColumn[0].row; //also this is number Of Travers In This Column.
-            int bottomestRowIndex = uniqueRowsInEachColumn[(uniqueRowsInEachColumn.Count - 1)].row;
+            int upestRowIndex = uniqueRowsInEachColumn[0].row; 
+            int bottomestRowIndex = uniqueRowsInEachColumn[(uniqueRowsInEachColumn.Count - 1)].row; //also this is number Of Travers In This Column.
 
             if (bottomestRowIndex > 0)
             {

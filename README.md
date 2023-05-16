@@ -66,7 +66,7 @@ Thank you for choosing the Match Three Gameplay Mechanics project! We hope you e
 
 ## Preview Video
 
-[![Gameplay Preview](preview_video_thumbnail.png)](https://youtu.be/qbmq2uRKuZI)
+[![Gameplay Preview](Assets/screenshot.jpg)](https://youtu.be/qbmq2uRKuZI)
 
 Please click on the image above to watch a preview video of the gameplay.
 

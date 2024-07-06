@@ -72,5 +72,5 @@ Please click on the image above to watch a preview video of the gameplay.
 
 ## Developer
 
-[AFRA](https://github.com/afraism)
+[AFRA](https://github.com/afradigm)
 

@@ -66,11 +66,8 @@ Thank you for choosing the Match Three Gameplay Mechanics project! We hope you e
 
 ## Preview Video
 
-<video src="Match Three Gameplay Mechanics_ Unleash the Puzzle-Solving Power!.mp4" controls="controls" style="max-width: 100%; height: auto;">
-    Your browser does not support the video tag.
-</video>
+<video src="Match Three Gameplay Mechanics_ Unleash the Puzzle-Solving Power!.mp4" controls="controls" style="max-width: 100%; height: auto;"></video>
 
-[![Gameplay Preview](Assets/screenshot.jpg)](https://youtu.be/qbmq2uRKuZI)
 
 Please click on the image above to watch a preview video of the gameplay.
 

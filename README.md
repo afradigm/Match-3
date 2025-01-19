@@ -2,6 +2,8 @@
 
 Welcome to the Match Three Gameplay Mechanics project! This open-source game draws inspiration from the gameplay mechanics of ToonBlast. It aims to provide a delightful match-three gaming experience while promoting code readability and modularity.
 
+https://github.com/afradigm/Match Three Gameplay Mechanics_ Unleash the Puzzle-Solving Power!
+
 ## Features
 
 - **Dynamic Board Game Size:** The project offers a dynamic board game size, allowing for flexible and varied level designs.
@@ -63,13 +65,6 @@ The Match Three Gameplay Mechanics project would like to acknowledge:
 - The creators of libraries and frameworks used in the project for their reliable tools, including the DoTween package.
 
 Thank you for choosing the Match Three Gameplay Mechanics project! We hope you enjoy playing and welcome your contributions and suggestions to make the project even better.
-
-## Preview Video
-
-<video src="Match Three Gameplay Mechanics_ Unleash the Puzzle-Solving Power!.mp4" controls="controls" style="max-width: 100%; height: auto;"></video>
-
-
-Please click on the image above to watch a preview video of the gameplay.
 
 ## Developer
 

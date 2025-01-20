@@ -18,7 +18,7 @@ https://github.com/user-attachments/assets/6c44f8cb-c9d2-4a8b-8adf-65bfc44c2e7a
 
 To get started with the Match Three Gameplay Mechanics project, follow these steps:
 
-1. Clone the repository: [git clone](https://github.com/afraism/Match-3.git)
+1. Clone the repository: [git clone](https://github.com/afradigm/Match-3.git)
 
 2. Open the project in Unity 2020.3.30 or a compatible version.
 
